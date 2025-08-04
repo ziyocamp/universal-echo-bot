@@ -1,4 +1,4 @@
-from telegram import Update, ParseMode, ReplyKeyboardMarkup, KeyboardButton
+from telegram import Update, ParseMode, ReplyKeyboardMarkup, KeyboardButton, WebAppInfo, ReplyKeyboardRemove
 from telegram.ext import CallbackContext
 
 
@@ -58,8 +58,24 @@ def start(update: Update, context: CallbackContext):
         text='Menu Tanlang:',
         reply_markup=ReplyKeyboardMarkup(
             keyboard=[
-                [KeyboardButton("Bosh Menu"), KeyboardButton("Buyurtma Berish")],
-                [KeyboardButton("A'loqa"), KeyboardButton("Contact")]
-            ]
+                [
+                    KeyboardButton(
+                        "Bosh Menu", 
+                        web_app=WebAppInfo('https://kun.uz/')
+                    ), 
+                    KeyboardButton("Buyurtma Berish")
+                ],
+                [KeyboardButton("Location", request_location=True), KeyboardButton("Contact", request_contact=True)],
+                [KeyboardButton("Close")]
+            ],
+            resize_keyboard=True,
+            one_time_keyboard=True,
         )
+    )
+
+
+def remove_keyboard(update: Update, context: CallbackContext):
+    update.message.reply_text(
+        'Closed Keyboard',
+        reply_markup=ReplyKeyboardRemove()
     )
