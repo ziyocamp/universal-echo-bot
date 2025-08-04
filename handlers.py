@@ -1,4 +1,4 @@
-from telegram import Update, ParseMode
+from telegram import Update, ParseMode, ReplyKeyboardMarkup, KeyboardButton
 from telegram.ext import CallbackContext
 
 
@@ -35,4 +35,31 @@ def handle_text(update: Update, context: CallbackContext):
     )
     update.message.reply_html(
         text='<b>bold</b>',
+    )
+
+
+def handle_main_menu(update: Update, context: CallbackContext):
+    update.message.reply_markdown_v2(
+        text=">Siz Bosh Menu ni Tanldingiz",
+        reply_markup=ReplyKeyboardMarkup(
+            keyboard=[
+                [KeyboardButton("Mahsulotlar")]
+            ]
+        )
+    )
+
+
+def start(update: Update, context: CallbackContext):
+    bot = context.bot
+    user = update.effective_user
+
+    bot.send_message(
+        chat_id=user.id,
+        text='Menu Tanlang:',
+        reply_markup=ReplyKeyboardMarkup(
+            keyboard=[
+                [KeyboardButton("Bosh Menu"), KeyboardButton("Buyurtma Berish")],
+                [KeyboardButton("A'loqa"), KeyboardButton("Contact")]
+            ]
+        )
     )
