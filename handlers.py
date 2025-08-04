@@ -1,4 +1,4 @@
-from telegram import Update, ParseMode, ReplyKeyboardMarkup, KeyboardButton, WebAppInfo, ReplyKeyboardRemove
+from telegram import Update, ParseMode, ReplyKeyboardMarkup, KeyboardButton, WebAppInfo, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CallbackContext
 
 
@@ -78,4 +78,18 @@ def remove_keyboard(update: Update, context: CallbackContext):
     update.message.reply_text(
         'Closed Keyboard',
         reply_markup=ReplyKeyboardRemove()
+    )
+
+
+def send_inline_keyboard(update: Update, context: CallbackContext):
+    update.message.reply_text(
+        'Inline Keyboard',
+        reply_markup=InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(text='Go Google', url='https://google.com'),
+                    InlineKeyboardButton(text='Order', callback_data='id'),
+                ]
+            ]
+        )
     )
